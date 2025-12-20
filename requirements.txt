@@ -1,0 +1,7 @@
+streamlit
+pandas
+scikit-learn
+pytesseract
+pillow
+pyttsx3
+

@@ -1,0 +1,10 @@
+command,label
+read image,image
+read the image,image
+scan image,image
+speak this text,speech
+read text,speech
+text to speech,speech
+convert my voice,voice
+speech to text,voice
+recognize voice,voice
