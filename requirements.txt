@@ -4,4 +4,5 @@ scikit-learn
 pytesseract
 pillow
 pyttsx3
+SpeechRecognition
 
