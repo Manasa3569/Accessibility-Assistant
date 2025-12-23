@@ -1,8 +1,7 @@
 streamlit
-pandas
-scikit-learn
-pytesseract
 pillow
+pytesseract
 pyttsx3
-SpeechRecognition
-
+speechrecognition
+scikit-learn
+numpy
