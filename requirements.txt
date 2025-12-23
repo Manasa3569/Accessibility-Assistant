@@ -1,7 +1,8 @@
 streamlit
 pillow
 pytesseract
-pyttsx3
-speechrecognition
+SpeechRecognition
+gTTS
 scikit-learn
 numpy
+
