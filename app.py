@@ -14,7 +14,7 @@ pytesseract.pytesseract.tesseract_cmd  = r"C:\Program Files\Tesseract-OCR\tesser
 # -----------------------------
 # STREAMLIT UI
 # -----------------------------
-st.title("Accessibility Assistant")
+st.title(" MANASA Accessibility Assistant")
 
 input_type = st.selectbox("Select input type:", ["Text", "Voice", "Image"])
 
@@ -83,3 +83,4 @@ if user_input:
     # Image input → display extracted text
     elif input_type == "Image":
         st.info("Text extracted from image (see above).")
+
