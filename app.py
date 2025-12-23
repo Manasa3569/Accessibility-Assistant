@@ -5,7 +5,7 @@ from gtts import gTTS
 import os
 
 # -----------------------------
-# SAFE IMPORT FOR VOICE
+# Optional: Speech Recognition
 # -----------------------------
 try:
     import speech_recognition as sr
@@ -14,37 +14,29 @@ except:
     voice_available = False
 
 # -----------------------------
-# SET TESSERACT PATH (Windows – Local only)
+# SET TESSERACT PATH (Windows local only)
 # -----------------------------
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+# Only needed if running locally on Windows
+# pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 # -----------------------------
 # STREAMLIT UI
 # -----------------------------
-st.set_page_config(
-    page_title="Accessibility Assistant",
-    page_icon="♿",
-    layout="wide"
-)
-
+st.set_page_config(page_title="Accessibility Assistant", page_icon="♿", layout="wide")
 st.title("♿ Accessibility Assistant")
-st.write("This tool helps visually impaired users using Text, Voice, and Image input.")
+st.write("A tool to help visually impaired users with Text, Voice, and Image input.")
 
 # -----------------------------
 # INPUT SELECTION
 # -----------------------------
-input_type = st.selectbox(
-    "Select input type:",
-    ["Text", "Voice", "Image"]
-)
-
+input_type = st.selectbox("Select input type:", ["Text", "Voice", "Image"])
 user_input = ""
 
 # -----------------------------
 # TEXT INPUT
 # -----------------------------
 if input_type == "Text":
-    user_input = st.text_area("Enter your text:", height=120)
+    user_input = st.text_area("Enter your command:", height=100)
 
 # -----------------------------
 # VOICE INPUT
@@ -68,19 +60,13 @@ elif input_type == "Voice":
 # IMAGE INPUT
 # -----------------------------
 elif input_type == "Image":
-    image_file = st.file_uploader(
-        "Upload an image",
-        type=["png", "jpg", "jpeg"]
-    )
-
+    image_file = st.file_uploader("Upload Image", ["png", "jpg", "jpeg"])
     if image_file:
         img = Image.open(image_file)
         st.image(img, caption="Uploaded Image", use_column_width=True)
 
-        # Convert to grayscale
+        # Convert image to grayscale and OCR
         gray_img = img.convert("L")
-
-        # OCR
         extracted_text = pytesseract.image_to_string(gray_img)
 
         st.subheader("Extracted Text:")
@@ -92,24 +78,24 @@ elif input_type == "Image":
         user_input = extracted_text
 
 # -----------------------------
-# OUTPUT ACTION
+# ACTION BASED ON INPUT
 # -----------------------------
 if user_input:
     st.markdown("---")
-    st.subheader("Output")
+    st.subheader("Output:")
 
-    # TEXT → SPEECH
+    # Text input → TTS
     if input_type == "Text":
-        tts = gTTS(text=user_input, lang="en")
-        audio_file = "output.mp3"
-        tts.save(audio_file)
-        st.audio(audio_file)
-        st.info("Text converted to Speech")
+        tts = gTTS(text=user_input, lang='te')
+        tts_file = "output.mp3"
+        tts.save(tts_file)
+        st.audio(tts_file)
+        st.info("Speaking the text in Telugu...")
 
-    # VOICE → TEXT
+    # Voice input → display recognized text
     elif input_type == "Voice":
-        st.info(f"Recognized Text: {user_input}")
+        st.info(f"Voice-to-Text result: {user_input}")
 
-    # IMAGE → TEXT
+    # Image input → display extracted text
     elif input_type == "Image":
-        st.info("Text successfully extracted from image.")
+        st.info("Text extracted from image above.")
